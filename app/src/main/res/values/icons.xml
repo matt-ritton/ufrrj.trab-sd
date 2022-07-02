@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="limpo">@drawable/sun</drawable>
+    <drawable name="noite">@drawable/moon</drawable>
+    <drawable name="nublado">@drawable/cloud</drawable>
+    <drawable name="chuvisco">@drawable/drizzle</drawable>
+    <drawable name="chuva">@drawable/rain</drawable>
+    <drawable name="tempestade">@drawable/storm</drawable>
+</resources>
