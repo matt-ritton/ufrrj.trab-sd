@@ -1,16 +1,25 @@
 package com.example.trab_sd
 
-import android.os.AsyncTask
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.example.trab_sd.databinding.ActivityMainBinding
 import org.json.JSONObject
 import java.net.URL
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
+    private val CHANNEL_ID = "exemplo" //Renomear
+    private val notificationId = 101
 
     val CITY: String = "seropédica,br"
     val API: String = "6e4ca54b59b3892d5409cc23e5a900ee"
@@ -19,23 +28,27 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        weatherTask().execute()
+        WeatherTask().execute()
+        createNotificationChannel()
+        sendNotification()
+
     }
 
-    inner class weatherTask() : AsyncTask<String, Void, String>() {
+    inner class WeatherTask : CoroutineAsyncTask<String, Void, String>() {
 
         override fun onPreExecute() {
-            findViewById<ProgressBar>(R.id.loader).visibility = View.VISIBLE
-            findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.GONE
-            findViewById<TextView>(R.id.errorText).visibility = View.GONE
+            binding.loader.visibility = View.VISIBLE
+            binding.mainContainer.visibility = View.GONE
+            binding.errorText.visibility = View.GONE
         }
 
         //Requisicao para API
         override fun doInBackground(vararg p0: String?): String? {
-
-            var response:String? = try {
+            val response:String? = try {
                 URL("https://api.openweathermap.org/data/2.5/forecast?q=$CITY&units=metric&appid=$API&lang=$LANG").readText(Charsets.UTF_8)
 
             } catch (e: Exception) {
@@ -46,13 +59,12 @@ class MainActivity : AppCompatActivity() {
 
         //Faz a leitura do dados e modifica os textos da HomeScreen
         override fun onPostExecute(result: String?) {
+
             try {
-                //Extraindo dados do JSON da API
                 val jsonObj = JSONObject(result)
-                val today = jsonObj.getJSONArray("list").getJSONObject(0)
-                val main = today.getJSONObject("main")
-                val wind = today.getJSONObject("wind")
-                val weather = today.getJSONArray("weather").getJSONObject(0)
+                val main = jsonObj.getJSONArray("list").getJSONObject(0).getJSONObject("main")
+                val wind = jsonObj.getJSONArray("list").getJSONObject(0).getJSONObject("wind")
+                val weather = jsonObj.getJSONArray("list").getJSONObject(0).getJSONArray("weather").getJSONObject(0)
                 val city = jsonObj.getJSONObject("city")
 
                 //DetailsContainer
@@ -62,118 +74,122 @@ class MainActivity : AppCompatActivity() {
 
                 //OverviewContainer
                 val status = weather.getString("main")
-                //val status = "Thunderstorm"
-                val description = weather.getString("description").replaceFirstChar { it.uppercase() }
                 val temp = main.getString("temp").substring(0,2)
                 val temp_min = main.getString("temp_min").substring(0,2)
                 val temp_max = main.getString("temp_max").substring(0,2)
+                val description = weather.getString("description").replaceFirstChar { it.uppercase() }
                 val address = city.getString("name")+", "+ city.getString("country")
 
                 //ForecastContainer
-                val day1 = jsonObj.getJSONArray("list").getJSONObject(1)
-                val main1 = day1.getJSONObject("main")
-                val weather1 = day1.getJSONArray("weather").getJSONObject(0)
-                val status1 = weather1.getString("main")
-                val temp1 = main1.getString("temp").substring(0,2)
+                //Dia 1
+                val day1 = jsonObj.getJSONArray("list").getJSONObject(6)
+                val mainDay1 = day1.getJSONObject("main")
+                val weatherDay1 = day1.getJSONArray("weather").getJSONObject(0)
+                val statusDay1 = weatherDay1.getString("main")
+                val tempDay1 = mainDay1.getString("temp").substring(0,2)
 
-                val day2 = jsonObj.getJSONArray("list").getJSONObject(2)
-                val main2 = day2.getJSONObject("main")
-                val weather2 = day2.getJSONArray("weather").getJSONObject(0)
-                val status2 = weather2.getString("main")
-                val temp2 = main2.getString("temp").substring(0,2)
+                //Dia 2
+                val day2 = jsonObj.getJSONArray("list").getJSONObject(14)
+                val mainDay2 = day2.getJSONObject("main")
+                val weatherDay2 = day2.getJSONArray("weather").getJSONObject(0)
+                val statusDay2 = weatherDay2.getString("main")
+                val tempDay2 = mainDay2.getString("temp").substring(0,2)
 
-                val day3 = jsonObj.getJSONArray("list").getJSONObject(3)
-                val main3 = day3.getJSONObject("main")
-                val weather3 = day3.getJSONArray("weather").getJSONObject(0)
-                val status3 = weather3.getString("main")
-                val temp3 = main3.getString("temp").substring(0,2)
+                //Dia 3
+                val day3 = jsonObj.getJSONArray("list").getJSONObject(22)
+                val mainDay3 = day3.getJSONObject("main")
+                val weatherDay3 = day3.getJSONArray("weather").getJSONObject(0)
+                val status3 = weatherDay3.getString("main")
+                val tempDay3 = mainDay3.getString("temp").substring(0,2)
 
-                val day4 = jsonObj.getJSONArray("list").getJSONObject(4)
-                val main4 = day4.getJSONObject("main")
-                val weather4 = day4.getJSONArray("weather").getJSONObject(0)
-                val status4 = weather4.getString("main")
-                val temp4 = main4.getString("temp").substring(0,2)
-
+                //Dia 4
+                val day4 = jsonObj.getJSONArray("list").getJSONObject(30)
+                val mainDay4 = day4.getJSONObject("main")
+                val weatherDay4 = day4.getJSONArray("weather").getJSONObject(0)
+                val status4 = weatherDay4.getString("main")
+                val tempDay4 = mainDay4.getString("temp").substring(0,2)
 
                 changeIcon(status, R.id.status)
                 changeBackground(status)
 
                 //Exibindo os dados em tela
-                findViewById<TextView>(R.id.wind).text = windSpeed + " km/h"
-                findViewById<TextView>(R.id.humidity).text = humidity + "%"
-                findViewById<TextView>(R.id.pressure).text = pressure + " mb"
+                //DetailsContainer
+                binding.wind.text = windSpeed + " km/h"
+                binding.humidity.text = humidity + "%"
+                binding.pressure.text = pressure + " mb"
 
-                findViewById<TextView>(R.id.desc).text = description
-                findViewById<TextView>(R.id.temp).text = temp
-                findViewById<TextView>(R.id.temp_min).text = temp_min + "°"
-                findViewById<TextView>(R.id.temp_max).text = temp_max + "°"
-                findViewById<TextView>(R.id.address).text = address
+                //OverviewContainer
+                binding.desc.text = description
+                binding.temp.text = temp
+                binding.tempMin.text = temp_min + "°"
+                binding.tempMax.text = temp_max + "°"
+                binding.address.text = address
 
-                changeIcon("Clear", R.id.status1)
-                findViewById<TextView>(R.id.day1).text = temp1 + "°"
-
-                changeIcon(status2, R.id.status2)
-                findViewById<TextView>(R.id.day2).text = temp2 + "°"
-
+                //ForecastContainer
+                changeIcon(statusDay1, R.id.status1)
+                binding.day1.text = tempDay1 + "°"
+                changeIcon(statusDay2, R.id.status2)
+                binding.day2.text = tempDay2 + "°"
                 changeIcon(status3, R.id.status3)
-                findViewById<TextView>(R.id.day3).text = temp3 + "°"
-
+                binding.day3.text = tempDay3 + "°"
                 changeIcon(status4, R.id.status4)
-                findViewById<TextView>(R.id.day4).text = temp4 + "°"
+                binding.day4.text = tempDay4 + "°"
 
-                // -------------------------------------------------- //
-                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
-                findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
+                binding.loader.visibility = View.GONE
+                binding.mainContainer.visibility = View.VISIBLE
 
             } catch (e: Exception) {
-                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
-                findViewById<TextView>(R.id.errorText).visibility = View.VISIBLE
-
+                binding.loader.visibility = View.GONE
+                binding.errorText.visibility = View.VISIBLE
             }
 
         }
 
         //Muda o ícone conforme o tempo
         private fun changeIcon(status:String, id:Int) {
-
-            if (status == "Clear") {
-                findViewById<ImageView>(id).setImageResource(R.drawable.limpo)
-            }
-
-            if (status == "Cloud") {
-                findViewById<ImageView>(id).setImageResource(R.drawable.nublado)
-            }
-
-            if (status == "Drizzle") {
-                findViewById<ImageView>(id).setImageResource(R.drawable.chuvisco)
-            }
-
-            if (status == "Rain") {
-                findViewById<ImageView>(id).setImageResource(R.drawable.chuva)
-            }
-
-            if (status == "Thunderstorm") {
-                findViewById<ImageView>(id).setImageResource(R.drawable.tempestade)
-            }
-
+            if (status == "Clear") { findViewById<ImageView>(id).setImageResource(R.drawable.limpo) }
+            if (status == "Cloud") { findViewById<ImageView>(id).setImageResource(R.drawable.nublado) }
+            if (status == "Drizzle") { findViewById<ImageView>(id).setImageResource(R.drawable.chuvisco) }
+            if (status == "Rain") { findViewById<ImageView>(id).setImageResource(R.drawable.chuva) }
+            if (status == "Thunderstorm") { findViewById<ImageView>(id).setImageResource(R.drawable.tempestade) }
         }
 
         //Muda o wallpaper conforme a hora do dia
         private fun changeBackground(status: String) {
             val timeNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY).minus(3)
-
             if (timeNow <= 6 || timeNow >= 18) {
-
-                if (status == "Clear") {
-                    findViewById<ImageView>(R.id.status).setImageResource(R.drawable.noite)
-                }
-
-                findViewById<ConstraintLayout>(R.id.main).setBackgroundResource(R.drawable.bg_night_bmp)
-
+                binding.status.setImageResource(R.drawable.noite)
+                binding.main.setBackgroundResource(R.drawable.bg_night_bmp)
             }
-
         }
 
+    }
+
+    //Notificações
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Notification Title" //Renomear
+            val descriptionText = "Notification Description" //Renomear
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun sendNotification() {
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.sun)
+            .setContentTitle("Teste")
+            .setContentText("Ta pegando fogo bicho")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(notificationId, builder.build())
+        }
     }
 
 }
