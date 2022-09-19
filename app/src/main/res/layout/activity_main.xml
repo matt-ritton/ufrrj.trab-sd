@@ -18,126 +18,237 @@
 
         <!-- Header -->
         <LinearLayout
-            android:id="@+id/detailsContainer"
+            android:id="@+id/menuContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:weightSum="1"
+            android:layout_marginTop="20dp">
 
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sairacondensed"
+                android:text="Cidade, BR"
+                android:textColor="@color/default_color"
+                android:textSize="24sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/menu"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/menu"
+                app:tint="@color/default_color"/>
+        </LinearLayout>
+
+        <!-- Previsao do Tempo -->
+        <LinearLayout
+            android:id="@+id/forecastContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="70dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:layout_weight="1"
+                android:weightSum="5">
 
-                <!-- Vento -->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:src="@drawable/wind"
-                        android:layout_marginBottom="10sp"
-                        app:tint="@color/default_color">
-                    </ImageView>
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/wind"
+                        android:id="@+id/dateDay1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:fontFamily="@font/rubik"
+                        android:text="08/09"
                         android:textColor="@color/default_color"
-                        android:text="3 km/h">
-                    </TextView>
+                        android:textSize="15sp"/>
+
+                    <ImageView
+                        android:id="@+id/statusDay1"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/cloud"
+                        app:tint="@color/default_color" />
+
+                    <TextView
+                        android:id="@+id/tempDay1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="18º"
+                        android:textColor="@color/default_color"
+                        android:textSize="16sp"
+                        android:layout_marginTop="6dp"/>
+
                 </LinearLayout>
 
                 <Space
-                    android:layout_width="5dp"
-                    android:layout_height="wrap_content">
-                </Space>
+                    android:layout_width="36sp"
+                    android:layout_height="wrap_content" />
 
-                <!-- Umidade -->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:src="@drawable/humidity"
-                        app:tint="@color/default_color"
-                        android:layout_marginBottom="10sp">
-                    </ImageView>
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/humidity"
+                        android:id="@+id/dateDay2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:fontFamily="@font/rubik"
+                        android:text="09/09"
                         android:textColor="@color/default_color"
-                        android:text="91%">
-                    </TextView>
+                        android:textSize="15sp"/>
+
+                    <ImageView
+                        android:id="@+id/statusDay2"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/cloud"
+                        app:tint="@color/default_color" />
+
+                    <TextView
+                        android:id="@+id/tempDay2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="18º"
+                        android:textColor="@color/default_color"
+                        android:textSize="16sp"
+                        android:layout_marginTop="6dp"/>
+
                 </LinearLayout>
 
                 <Space
-                    android:layout_width="5dp"
-                    android:layout_height="wrap_content">
-                </Space>
+                    android:layout_width="36sp"
+                    android:layout_height="wrap_content" />
 
-                <!-- Pressao -->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:src="@drawable/pressure"
-                        app:tint="@color/default_color"
-                        android:layout_marginBottom="10sp"/>
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/pressure"
+                        android:id="@+id/dateDay3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:fontFamily="@font/rubik"
+                        android:text="10/09"
                         android:textColor="@color/default_color"
-                        android:text="1021.0 mb"/>
+                        android:textSize="15sp"/>
 
+                    <ImageView
+                        android:id="@+id/statusDay3"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/cloud"
+                        app:tint="@color/default_color" />
+
+                    <TextView
+                        android:id="@+id/tempDay3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="18º"
+                        android:textColor="@color/default_color"
+                        android:textSize="16sp"
+                        android:layout_marginTop="6dp"/>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="36sp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/dateDay4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="11/09"
+                        android:textColor="@color/default_color"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/statusDay4"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/cloud"
+                        app:tint="@color/default_color" />
+
+                    <TextView
+                        android:id="@+id/tempDay4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="18º"
+                        android:textColor="@color/default_color"
+                        android:textSize="16sp"
+                        android:layout_marginTop="6dp"/>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="36sp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/dateDay5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="12/09"
+                        android:textColor="@color/default_color"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/statusDay5"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/cloud"
+                        app:tint="@color/default_color" />
+
+                    <TextView
+                        android:id="@+id/tempDay5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="18º"
+                        android:textColor="@color/default_color"
+                        android:textSize="16sp"
+                        android:layout_marginTop="6dp"/>
                 </LinearLayout>
 
             </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="100sp"/>
-
-            <ImageView
-                android:id="@+id/status"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:src="@drawable/limpo"
-                app:tint="@color/default_color" />
         </LinearLayout>
 
         <!-- Conteudo Principal -->
@@ -145,11 +256,23 @@
             android:id="@+id/overviewContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingTop="50dp"
-            android:weightSum="2">
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/status"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/limpo"
+                    app:tint="@color/default_color" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -161,10 +284,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="sans-serif-light"
+                    android:fontFamily="@font/rubik"
                     android:text="24"
                     android:textColor="@color/default_color"
-                    android:textSize="140dp" />
+                    android:textSize="144sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -180,10 +303,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/rubik"
                         android:text="°C"
                         android:textColor="@color/default_color"
-                        android:textSize="50sp" />
+                        android:textSize="48sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -206,14 +329,15 @@
                             android:id="@+id/temp_max"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Temp. Max."
+                            android:fontFamily="@font/rubik"
+                            android:text="30º"
                             android:textColor="@color/default_color"
                             android:textSize="18sp" />
                     </LinearLayout>
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="10sp" />
+                        android:layout_height="11sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -237,7 +361,8 @@
                             android:id="@+id/temp_min"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Temp. Min."
+                            android:fontFamily="@font/rubik"
+                            android:text="18º"
                             android:textColor="@color/default_color"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -253,148 +378,125 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Localizacao"
-                    android:textColor="@color/default_color"
-                    android:textSize="20sp" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="10sp"/>
-
-
-                <TextView
                     android:id="@+id/desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Descrição"
+                    android:fontFamily="@font/sairacondensed"
+                    android:text="Céu Limpo"
                     android:textColor="@color/default_color"
-                    android:textSize="16dp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Footer -->
+        <!-- Dados do Sensor -->
         <LinearLayout
-            android:id="@+id/forecastContainer"
+            android:id="@+id/detailsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:weightSum="4"
-            android:layout_marginBottom="20dp">
+            android:orientation="vertical"
+            android:gravity="center">
+
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="32sp">
 
+                <!-- Vento - Substituir depois por temperatura do sensor -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/status1"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:src="@drawable/cloud"
-                        app:tint="@color/default_color" />
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/wind"
+                        android:layout_marginBottom="10sp"
+                        app:tint="@color/default_color">
+                    </ImageView>
 
                     <TextView
-                        android:id="@+id/day1"
+                        android:id="@+id/wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dia 1"
+                        android:textSize="14sp"
                         android:textColor="@color/default_color"
-                        android:textSize="18sp" />
-
+                        android:fontFamily="@font/rubik"
+                        android:text="3 km/h">
+                    </TextView>
                 </LinearLayout>
 
                 <Space
-                    android:layout_width="40sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content">
+                </Space>
 
+                <!-- Umidade -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/status2"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:src="@drawable/cloud"
-                        app:tint="@color/default_color" />
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/humidity"
+                        app:tint="@color/default_color"
+                        android:layout_marginBottom="10sp">
+                    </ImageView>
 
                     <TextView
-                        android:id="@+id/day2"
+                        android:id="@+id/humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dia 2"
+                        android:textSize="14sp"
                         android:textColor="@color/default_color"
-                        android:textSize="18sp" />
-
+                        android:fontFamily="@font/rubik"
+                        android:text="91%">
+                    </TextView>
                 </LinearLayout>
 
                 <Space
-                    android:layout_width="40sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content">
+                </Space>
 
+                <!-- Pressao -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/status3"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:src="@drawable/cloud"
-                        app:tint="@color/default_color" />
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/pressure"
+                        app:tint="@color/default_color"
+                        android:layout_marginBottom="10sp"/>
 
                     <TextView
-                        android:id="@+id/day3"
+                        android:id="@+id/pressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dia 3"
+                        android:textSize="14sp"
                         android:textColor="@color/default_color"
-                        android:textSize="18sp" />
+                        android:fontFamily="@font/rubik"
+                        android:text="1021.0 mb"/>
 
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="40sp"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/status4"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:src="@drawable/cloud"
-                        app:tint="@color/default_color" />
-
-                    <TextView
-                        android:id="@+id/day4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Dia 4"
-                        android:textColor="@color/default_color"
-                        android:textSize="18sp" />
                 </LinearLayout>
 
             </LinearLayout>
+
         </LinearLayout>
 
     </RelativeLayout>

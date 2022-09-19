@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 val weather = jsonObj.getJSONArray("list").getJSONObject(0).getJSONArray("weather").getJSONObject(0)
                 val city = jsonObj.getJSONObject("city")
 
-                //DetailsContainer
+                //DetailsContainer - Isso aqui será alterado depois para os dados do sensor
                 val windSpeed = wind.getString("speed")
                 val humidity = main.getString("humidity")
                 val pressure = main.getString("pressure")
@@ -87,6 +87,8 @@ class MainActivity : AppCompatActivity() {
                 val weatherDay1 = day1.getJSONArray("weather").getJSONObject(0)
                 val statusDay1 = weatherDay1.getString("main")
                 val tempDay1 = mainDay1.getString("temp").substring(0,2)
+                val dateText1 = day1.getString("dt_txt").substring(5, 10).replace('-', '/')
+                    .split('/').reversed().joinToString(separator = "/")
 
                 //Dia 2
                 val day2 = jsonObj.getJSONArray("list").getJSONObject(14)
@@ -94,6 +96,8 @@ class MainActivity : AppCompatActivity() {
                 val weatherDay2 = day2.getJSONArray("weather").getJSONObject(0)
                 val statusDay2 = weatherDay2.getString("main")
                 val tempDay2 = mainDay2.getString("temp").substring(0,2)
+                val dateText2 = day2.getString("dt_txt").substring(5, 10).replace('-', '/')
+                    .split('/').reversed().joinToString(separator = "/")
 
                 //Dia 3
                 val day3 = jsonObj.getJSONArray("list").getJSONObject(22)
@@ -101,6 +105,8 @@ class MainActivity : AppCompatActivity() {
                 val weatherDay3 = day3.getJSONArray("weather").getJSONObject(0)
                 val status3 = weatherDay3.getString("main")
                 val tempDay3 = mainDay3.getString("temp").substring(0,2)
+                val dateText3 = day3.getString("dt_txt").substring(5, 10).replace('-', '/')
+                    .split('/').reversed().joinToString(separator = "/")
 
                 //Dia 4
                 val day4 = jsonObj.getJSONArray("list").getJSONObject(30)
@@ -108,9 +114,20 @@ class MainActivity : AppCompatActivity() {
                 val weatherDay4 = day4.getJSONArray("weather").getJSONObject(0)
                 val status4 = weatherDay4.getString("main")
                 val tempDay4 = mainDay4.getString("temp").substring(0,2)
+                val dateText4 = day4.getString("dt_txt").substring(5, 10).replace('-', '/')
+                    .split('/').reversed().joinToString(separator = "/")
+
+                //Dia 5
+                val day5 = jsonObj.getJSONArray("list").getJSONObject(38)
+                val mainDay5 = day5.getJSONObject("main")
+                val weatherDay5 = day5.getJSONArray("weather").getJSONObject(0)
+                val status5 = weatherDay5.getString("main")
+                val tempDay5 = mainDay5.getString("temp").substring(0,2)
+                val dateText5 = day5.getString("dt_txt").substring(5, 10).replace('-', '/')
+                    .split('/').reversed().joinToString(separator = "/")
 
                 changeIcon(status, R.id.status)
-                changeBackground(status)
+                changeBackground()
 
                 //Exibindo os dados em tela
                 //DetailsContainer
@@ -126,14 +143,25 @@ class MainActivity : AppCompatActivity() {
                 binding.address.text = address
 
                 //ForecastContainer
-                changeIcon(statusDay1, R.id.status1)
-                binding.day1.text = tempDay1 + "°"
-                changeIcon(statusDay2, R.id.status2)
-                binding.day2.text = tempDay2 + "°"
-                changeIcon(status3, R.id.status3)
-                binding.day3.text = tempDay3 + "°"
-                changeIcon(status4, R.id.status4)
-                binding.day4.text = tempDay4 + "°"
+                binding.dateDay1.text = dateText1
+                changeIcon(statusDay1, R.id.statusDay1)
+                binding.tempDay1.text = tempDay1 + "°"
+
+                binding.dateDay2.text = dateText2
+                changeIcon(statusDay2, R.id.statusDay2)
+                binding.tempDay2.text = tempDay2 + "°"
+
+                binding.dateDay3.text = dateText3
+                changeIcon(status3, R.id.statusDay3)
+                binding.tempDay3.text = tempDay3 + "°"
+
+                binding.dateDay4.text = dateText4
+                changeIcon(status4, R.id.statusDay4)
+                binding.tempDay4.text = tempDay4 + "°"
+
+                binding.dateDay5.text = dateText5
+                changeIcon(status5, R.id.statusDay5)
+                binding.tempDay5.text = tempDay5 + "°"
 
                 binding.loader.visibility = View.GONE
                 binding.mainContainer.visibility = View.VISIBLE
@@ -155,7 +183,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Muda o wallpaper conforme a hora do dia
-        private fun changeBackground(status: String) {
+        private fun changeBackground() {
             val timeNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY).minus(3)
             if (timeNow <= 6 || timeNow >= 18) {
                 binding.status.setImageResource(R.drawable.noite)
@@ -166,6 +194,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Notificações
+
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Notification Title" //Renomear

@@ -5,7 +5,7 @@ import kotlinx.coroutines.*
 abstract class CoroutineAsyncTask<Params, Progress, Result>{
 
     open fun onPreExecute() { } //executa na thread principal
-    abstract fun doInBackground(vararg params: String?): String? //executa na thread de fundo
+    abstract fun doInBackground(vararg params: String?): String? //executa na thread de segundo plano
     open fun onPostExecute(result: String?) { } //executa na thread principal
 
     fun execute() {
