@@ -15,11 +15,19 @@ abstract class CoroutineAsyncTask<Params, Progress, Result>{
         }
 
         GlobalScope.launch(Dispatchers.Default) {
-            val result = doInBackground()
 
-            withContext(Dispatchers.Main) {
-                onPostExecute(result)
+            while (NonCancellable.isActive) {
+                val result = doInBackground()
+                delay(5000)
+
+                withContext(Dispatchers.Main) {
+                    onPostExecute(result)
+                }
+
             }
+
         }
+
     }
+
 }

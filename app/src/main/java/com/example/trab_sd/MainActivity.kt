@@ -5,11 +5,13 @@ import android.app.NotificationManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.*
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.trab_sd.databinding.ActivityMainBinding
+import kotlinx.coroutines.Job
 import org.json.JSONObject
 import java.net.URL
 import java.util.*
@@ -34,8 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         WeatherTask().execute()
         createNotificationChannel()
-        sendNotification()
-
     }
 
     inner class WeatherTask : CoroutineAsyncTask<String, Void, String>() {
@@ -48,12 +48,17 @@ class MainActivity : AppCompatActivity() {
 
         //Requisicao para API
         override fun doInBackground(vararg p0: String?): String? {
-            val response:String? = try {
-                URL("https://api.openweathermap.org/data/2.5/forecast?q=$CITY&units=metric&appid=$API&lang=$LANG").readText(Charsets.UTF_8)
+            var response = " "
+            //var response2 = " "
+
+            try {
+                response = URL("https://api.openweathermap.org/data/2.5/forecast?q=$CITY&units=metric&appid=$API&lang=$LANG").readText(Charsets.UTF_8)
+                //response2 = URL("http://192.168.1.3:3000/ws/mqtt").readText(Charsets.UTF_8)
 
             } catch (e: Exception) {
                 null
             }
+
             return response
         }
 
@@ -62,14 +67,15 @@ class MainActivity : AppCompatActivity() {
 
             try {
                 val jsonObj = JSONObject(result)
+                println(result)
+
                 val main = jsonObj.getJSONArray("list").getJSONObject(0).getJSONObject("main")
-                val wind = jsonObj.getJSONArray("list").getJSONObject(0).getJSONObject("wind")
                 val weather = jsonObj.getJSONArray("list").getJSONObject(0).getJSONArray("weather").getJSONObject(0)
                 val city = jsonObj.getJSONObject("city")
 
                 //DetailsContainer - Isso aqui será alterado depois para os dados do sensor
-                val windSpeed = wind.getString("speed")
-                val humidity = main.getString("humidity")
+                //val tempSensor = jsonObj.getString("temperatura").substring(0,2)
+                //val humidity = jsonObj.getJSONObject("").getString("umidade").substring(0,2)
                 val pressure = main.getString("pressure")
 
                 //OverviewContainer
@@ -131,8 +137,8 @@ class MainActivity : AppCompatActivity() {
 
                 //Exibindo os dados em tela
                 //DetailsContainer
-                binding.wind.text = windSpeed + " km/h"
-                binding.humidity.text = humidity + "%"
+                //binding.tempSensor.text = tempSensor + " km/h"
+                //binding.humidity.text = humidity + "%"
                 binding.pressure.text = pressure + " mb"
 
                 //OverviewContainer
@@ -162,6 +168,10 @@ class MainActivity : AppCompatActivity() {
                 binding.dateDay5.text = dateText5
                 changeIcon(status5, R.id.statusDay5)
                 binding.tempDay5.text = tempDay5 + "°"
+
+                /*if (Integer.parseInt(tempSensor) > 31) {
+                    sendNotification()
+                }*/
 
                 binding.loader.visibility = View.GONE
                 binding.mainContainer.visibility = View.VISIBLE
